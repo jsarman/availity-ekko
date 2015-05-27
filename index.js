@@ -1,5 +1,5 @@
 var path = require('path');
-var Ekko = require('./server');
+var Ekko = require('./hapi_server');
 
 var configPath = path.join(__dirname, 'config.js');
 
