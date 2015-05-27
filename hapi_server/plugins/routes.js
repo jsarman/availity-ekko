@@ -9,22 +9,31 @@ exports.register = function(server, options, next) {
     config.options.endpoints = require(config.options.routes);
     config.options.dataPath = config.options.data;
 
-    _.each(config.options.endpoints, function(endpoint, url){
+    _.each(config.options.endpoints, function(endpoint, url) {
         //allows { path:'/v1', ...} and '/v1': {...}
         endpoint.path = endpoint.path || url;
         buildRoutes(endpoint, routes);
     });
 
+    _.each(routes, function(route) {
+        delete route.GET;
+        delete route.POST;
+        delete route.PUT;
+        delete route.PATCH;
+        delete route.DELETE;
+        delete route.OPTIONS;
+    });
+
     server.route(routes);
 
 
-//build routes
+    //build routes
 
-//my stuff
+    //my stuff
 
-//post stuff
+    //post stuff
 
-next();
+    next();
 };
 
 exports.register.attributes = {
@@ -32,21 +41,21 @@ exports.register.attributes = {
     version: '0.0.1'
 };
 
-var buildRoutes = function(endpoint, routes){
+var buildRoutes = function(endpoint, routes) {
     // default method: 'GET' or method: ['GET', 'POST']
-    if(endpoint.method){
+    if (endpoint.method) {
         routes.push(endpoint);
-    } else if(endpoint.GET || endpoint.POST || endpoint.PUT || endpoint.PATCH || endpoint.DELETE || endpoint.OPTIONS){
+    } else if (endpoint.GET || endpoint.POST || endpoint.PUT || endpoint.PATCH || endpoint.DELETE || endpoint.OPTIONS) {
         //Defined individual methods
-        _.each(['GET', 'POST', 'PUT', 'PATCH', 'DELETE','OPTIONS'], function(method){
-            if(endpoint[method]){
-                var thisRoute = endpoint;
+        _.each(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], function(method) {
+            if (endpoint[method]) {
+                var thisRoute = _.clone(endpoint, true);
                 thisRoute.method = method;
                 thisRoute = _.extend(thisRoute, endpoint[method]);
                 routes.push(thisRoute);
             }
         });
-    }else{
+    } else {
         endpoint.method = '*';
         routes.push(endpoint);
     }
