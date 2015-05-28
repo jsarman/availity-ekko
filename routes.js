@@ -7,6 +7,21 @@ module.exports = {
         }
     },
 
+    'asyncTest': {
+        path: '/repeater',
+        method: 'GET',
+        handler: function(request, reply) {
+            request.server.methods.getRepeatVal('repeater', 5, function(err, result) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    reply('Repeat # ' + result);
+                }
+            });
+
+        }
+    },
+
     'named': {
         method: 'GET',
         path: '/{name}',
@@ -28,4 +43,6 @@ module.exports = {
             }
         }
     }
+
+
 }

@@ -4,6 +4,9 @@ exports.register = function(server, options, next) {
     //any global plugins
     var plugins = [];
     plugins.push({
+        register: require('./repeat')
+    })
+    plugins.push({
         register: require('./routes')
     });
 
