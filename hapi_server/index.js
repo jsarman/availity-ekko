@@ -28,20 +28,25 @@ proto.start = function(options) {
     });
 
 
+    return new BPromise(function(resolve, reject) {
 
-    config.server.register({
-        register: require('./plugins'),
-        options: {
-            env: config.environment
-        }
-    }, function(err) {
-        if (err) {
-            throw err; //something bad happened loading the plugin
-        }
+        config.server.register({
+            register: require('./plugins'),
+            options: {
+                env: config.environment
+            }
+        }, function(err) {
+            if (err) {
 
-        config.server.start(function() {
-            logger.start(config.server.info.port, config.environment);
-            logger.success('open your browser to ' + config.server.info.uri);
+                reject(new Error(err));
+            }
+
+            config.server.start(function() {
+
+                logger.start(config.server.info.port, config.environment);
+                logger.success('open your browser to ' + config.server.info.uri);
+                resolve(true);
+            });
         });
     });
 };

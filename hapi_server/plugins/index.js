@@ -5,7 +5,10 @@ exports.register = function(server, options, next) {
     var plugins = [];
     plugins.push({
         register: require('./repeat')
-    })
+    });
+    plugins.push({
+      register: require('./proxy')
+    });
     plugins.push({
         register: require('./routes')
     });

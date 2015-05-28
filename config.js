@@ -90,8 +90,8 @@ var config = {
                 }]
             }
         },
-        data: path.join(__dirname, '/server/tests/data'),
-        routes: path.join(__dirname, '/server/tests/dummy.routes.config.json')
+        data: path.join(__dirname, '/data'),
+        routes: path.join(__dirname, '/routes')
     }
 
 };

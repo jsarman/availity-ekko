@@ -42,12 +42,13 @@ exports.register.attributes = {
 };
 
 var buildRoutes = function(endpoint, routes) {
+    var methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'];
     // default method: 'GET' or method: ['GET', 'POST']
     if (endpoint.method) {
         routes.push(endpoint);
     } else if (endpoint.GET || endpoint.POST || endpoint.PUT || endpoint.PATCH || endpoint.DELETE || endpoint.OPTIONS) {
         //Defined individual methods
-        _.each(['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'], function(method) {
+        _.each(methods, function(method) {
             if (endpoint[method]) {
                 var thisRoute = _.clone(endpoint, true);
                 thisRoute.method = method;
@@ -56,7 +57,7 @@ var buildRoutes = function(endpoint, routes) {
             }
         });
     } else {
-        endpoint.method = '*';
+        endpoint.method = methods;
         routes.push(endpoint);
     }
 }

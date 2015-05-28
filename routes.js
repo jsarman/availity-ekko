@@ -7,9 +7,14 @@ module.exports = {
         }
     },
 
+    '/v1/route1': {
+      handler: {
+        file: 'example1.json'
+      }
+    },
+
     'asyncTest': {
         path: '/repeater',
-        method: 'GET',
         handler: function(request, reply) {
             request.server.methods.getRepeatVal('repeater', 5, function(err, result) {
                 if (err) {
