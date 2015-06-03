@@ -52,12 +52,12 @@ proto.set = function(options) {
   }
   var config = this.path ? require(this.path) : this.defaultConfig();
 
-  // Allow programmatic overrides for environment
-  config = _.merge(config, options);
-
   // Pluck out environment specific config and save to `this.options`
   this.environment = process.env.NODE_ENV || 'development';
   this.options = config[this.environment];
+
+  // Allow programmatic overrides for environment
+  this.options = _.merge(this.options, options);
 
   // Merge in any command line overrides
   var args = argv(process.argv.slice(2));
