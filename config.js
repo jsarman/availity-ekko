@@ -68,6 +68,23 @@ var config = {
           }
         ]
       },
+      serviceOverride: {
+        host: "127.0.0.1",
+        port: 9998,
+        proxy: true,
+        headers: {
+          RemoteUser: 'otheruser2'
+        },
+        proxies: [
+          {
+            context: "/test1\/service2\/v3\/service",
+            rewrite: {
+              from: "^/test1/service2",
+              to: ""
+            }
+          }
+        ]
+      },
       other: {
         host: "127.0.0.1",
         port: 9999,
